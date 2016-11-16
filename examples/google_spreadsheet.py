@@ -43,10 +43,10 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
-DHT_TYPE = Adafruit_DHT.DHT22
+DHT_TYPE = Adafruit_DHT.DHT11
 
 # Example of sensor connected to Raspberry Pi pin 23
-DHT_PIN  = 23
+DHT_PIN  = 4
 # Example of sensor connected to Beaglebone Black pin P8_11
 #DHT_PIN  = 'P8_11'
 
@@ -69,13 +69,13 @@ DHT_PIN  = 23
 # Then use the File -> Share... command in the spreadsheet to share it with read
 # and write acess to the email address above.  If you don't do this step then the
 # updates to the sheet will fail!
-GDOCS_OAUTH_JSON       = 'your SpreadsheetData-*.json file name'
+GDOCS_OAUTH_JSON       = 'PokemonGo-Map-5f32248a20f6.json'
 
 # Google Docs spreadsheet name.
-GDOCS_SPREADSHEET_NAME = 'your google docs spreadsheet name'
+GDOCS_SPREADSHEET_NAME = 'RPi-Monitor'
 
 # How long to wait (in seconds) between measurements.
-FREQUENCY_SECONDS      = 30
+FREQUENCY_SECONDS      = 2
 
 
 def login_open_sheet(oauth_key_file, spreadsheet):
@@ -115,7 +115,7 @@ while True:
 
     # Append the data in the spreadsheet, including a timestamp
     try:
-        worksheet.append_row((datetime.datetime.now(), temp, humidity))
+        worksheet.append_row((datetime.date.today(), datetime.datetime.time(datetime.datetime.now()), temp, humidity))
     except:
         # Error appending data, most likely because credentials are stale.
         # Null out the worksheet so a login is performed at the top of the loop.
